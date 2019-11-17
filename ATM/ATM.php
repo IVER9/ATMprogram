@@ -3,8 +3,8 @@
 require('./User.php');
 
 class ATM {
-    protected static $password_number_count = 4;                //暗証番号入力可能回数
-    public $playUser;                                    //ATMを使用しているユーザ-
+    protected static $password_number_count = 4;                
+    public $playUser;                                    
 
     public function  __construct() {
         $this->selectUser();
@@ -63,9 +63,9 @@ class ATM {
         return true;
     }
 
-    public function deposit() {                                //入金
-        $balance = $this->playUser['balance'];                //使用しているユーザーの残高を取得
-        $deposit_amount;                                        //入金額
+    public function deposit() {                                
+        $balance = $this->playUser['balance'];                
+        $deposit_amount;                                        
         echo '入金額を入力してください。' . PHP_EOL;
         $deposit_amount = $this->input('money');
         if ($deposit_amount > 500000) {
@@ -80,20 +80,20 @@ class ATM {
         $this->playUser['balance'] = $balance;
         }
 
-    public function balanceInquiry() {                                 //残高照会
-        if (!$this->checkPassword()) {                                 //暗証番号照合
+    public function balanceInquiry() {                                
+        if (!$this->checkPassword()) {                                
             echo '暗証番号が違います。' . PHP_EOL;
             return $this->balanceInquiry();
         }
-        $balance = $this->playUser['balance'];                         //使用しているユーザーの残高を取得
+        $balance = $this->playUser['balance'];                        
         $balance = number_format($balance);
         echo '￥' . $balance . PHP_EOL;
     }
 
-    public function withdrawal() {                                     //引き出し
-        $balance = $this->playUser['balance'];                        //使用しているユーザーの残高を取得
-        $withdrawal_amount;                                           //引き出し金額
-        if (!$this->checkPassword()) {                                //暗証番号照合
+    public function withdrawal() {                                     
+        $balance = $this->playUser['balance'];                        
+        $withdrawal_amount;                                         
+        if (!$this->checkPassword()) {                               
             echo '暗証番号が違います。' . PHP_EOL;
             return $this->withdrawal();
         }
@@ -109,40 +109,40 @@ class ATM {
         $this->playUser['balance'] = $balance;
     }
 
-    public function input($type) {                                     //入力関数
+    public function input($type) {                                     
         $input = trim(fgets(STDIN));
-        if ($type === 'menu_info') {                            //メニュー入力の時
+        if ($type === 'menu_info') {                           
             $check = $this->checkMenuNumber($input);
         }
 
-        if ($type === 'password_number') {                      //暗証番号を入力の時
+        if ($type === 'password_number') {                     
             $check = $this->checkNumber($input);
         }
 
-        if ($type === 'money') {                                //入金額、出金額の時
+        if ($type === 'money') {                                
             $check = $this->checkMoney($input);
         }
 
-        if ($type === 'id') {                                //入金額、出金額の時
+        if ($type === 'id') {                               
             $check = $this->checkId($input);
         }
-        if ($type === 'name') {                                //入金額、出金額の時
+        if ($type === 'name') {                                
             $check = $this->checkName($input);
         }
 
-        if (!$check) {                                          // エラーがある場合は、やり直し
+        if (!$check) {                                          
             return $this->input($type);
         }
         return $input;
     }
 
-    public function forcedTermination() {                              //強制終了
+    public function forcedTermination() {                              
         if ($this->$password_number_count === 0) {
             exit('強制終了します。');
         }
     }
 
-    public function checkMenuNumber($input) {                              //メニュー番号のバリデーションチェック
+    public function checkMenuNumber($input) {                             
         $errors = array();
         if ($input === '') {
             $errors[] = '未入力です';
@@ -165,7 +165,7 @@ class ATM {
         return $input;
     }
 
-    public function checkNumber($input) {                              //番号のバリデーションチェック
+    public function checkNumber($input) {                             
         $errors = array();
         if ($input === '') {
             $errors[] = '未入力です';
@@ -188,7 +188,7 @@ class ATM {
         return $input;
     }
 
-    public function checkMoney($input) {                               //金額のバリデーションチェック
+    public function checkMoney($input) {                              
         $errors = array();
         if ($input === '') {
             $errors[] = '未入力です';
@@ -207,7 +207,7 @@ class ATM {
         return $input;
     }
 
-    public function checkId($input) {                               //IDのバリデーションチェック
+    public function checkId($input) {                              
         $errors = array();
         if ($input === '') {
             $errors[] = '未入力です';
@@ -226,7 +226,7 @@ class ATM {
         return $input;
     }
 
-    public function checkName($input) {                               //名前のバリデーションチェック
+    public function checkName($input) {                               
         $errors = array();
         if ($input === '') {
             $errors[] = '未入力です';
